@@ -88,9 +88,9 @@ fetch_client() ->
         setup_update_callback(ExpirationTime),
         {ok, Client}
     catch
-        E:R when ShouldCatch ->
+        E:R:S when ShouldCatch ->
             error_logger:info_msg("aws_metadata ignoring exception ~p:~p (~p)~n",
-                                  [E,R,erlang:get_stacktrace()]),
+                                  [E,R,S]),
             setup_retry_callback(?RETRY_DELAY),
             {ok, undefined}
     end.
